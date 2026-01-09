@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Hover Animation */
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .dropdown {
+            background: linear-gradient(to right, #9333ea, #ec4899);
+            color: white;
+        }
+        .dropdown ul li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-6xl border border-gray-300">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">My Schedule</h2>
+        <div class="grid grid-cols-5 gap-4 text-center mb-4">
+            <div class="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg shadow-md">
+                <div class="text-lg">Monday</div>
+                <div class="text-sm">19 Feb</div>
+            </div>
+            <div class="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg shadow-md">
+                <div class="text-lg">Tuesday</div>
+                <div class="text-sm">20 Feb</div>
+            </div>
+            <div class="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg shadow-md">
+                <div class="text-lg">Wednesday</div>
+                <div class="text-sm">21 Feb</div>
+            </div>
+            <div class="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg shadow-md">
+                <div class="text-lg">Thursday</div>
+                <div class="text-sm">22 Feb</div>
+            </div>
+            <div class="p-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg shadow-md">
+                <div class="text-lg">Friday</div>
+                <div class="text-sm">23 Feb</div>
+            </div>
+        </div>
+        <div class="grid grid-cols-5 gap-4">
+            <script>
+                const schedule = [
+                    ["TOC", "SQL", "WT"],
+                    ["WT", "SQL", "TOC"],
+                    ["TOC", "DE", "SQL"],
+                    ["SQL", "TOC", "WT"],
+                    ["TOC", "WT", "OFF"]
+                ];
+                const times = ["9:00 AM - 10:00 AM", "10:15 AM - 11:15 AM", "11:30 AM - 12:30 PM"];
+                document.write(schedule.map(day => `<div class='space-y-4'>` + day.map((subject, index) => `
+                    <div class='relative'>
+                        <div onclick='toggleDropdown(this)' class='card p-4 bg-white text-center shadow-lg rounded-lg border border-gray-300 cursor-pointer'>
+                            <div class='font-semibold text-gray-700'>${subject}</div>
+                            <div class='text-sm text-gray-500'>${times[index]}</div>
+                        </div>
+                        <div class='dropdown hidden absolute left-0 mt-2 w-48 shadow-md rounded-lg border border-gray-300 z-10'>
+                            <ul>
+                                <li class='px-4 py-2 cursor-pointer'>
+                                <a href="markattendance.html" target="_blank">Mark Attendance</a>
+                            </li>
+                               <li class='px-4 py-2 cursor-pointer'>Update Lecture</li>
+                                 <li class='px-4 py-2 cursor-pointer'>Delete Lecture</li>                             </ul>
+                         </div>
+                     </div>`).join('') + `</div>`).join(''));
+             </script>
+         </div>
+     </div>
+     <script>
+        function toggleDropdown(card) {
+            const dropdown = card.nextElementSibling;
+            dropdown.classList.toggle('hidden');
+        }
+      
+
+        document.addEventListener('click', function(event) {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                if (!dropdown.previousElementSibling.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        });   
+
+   </script>
+</body>
+</html>
