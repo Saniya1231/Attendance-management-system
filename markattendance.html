@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Attendance</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center p-6">
+
+<div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-5xl mb-8">
+  <h1 class="text-3xl font-bold text-center text-purple-600 mb-4">Faculty Attendance Panel</h1>
+
+  <!-- Faculty Info -->
+  <div class="grid grid-cols-3 gap-6 text-center mb-6">
+    <div>
+      <p class="font-semibold text-gray-600">Faculty Name</p>
+      <p class="text-lg font-bold text-gray-800">Prof. Saniya Dehankar</p>
+    </div>
+    <div>
+      <p class="font-semibold text-gray-600">Subject</p>
+      <p class="text-lg font-bold text-gray-800">Web Technology</p>
+    </div>
+    <div>
+      <p class="font-semibold text-gray-600">Time</p>
+      <p class="text-lg font-bold text-gray-800">10:00 AM - 11:00 AM</p>
+    </div>
+  </div>
+
+  <!-- QR Generator -->
+  <div class="text-center mb-6">
+    <button onclick="openQR()" class="bg-purple-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition">Generate QR Code</button>
+  </div>
+
+  <!-- Attendance Counters -->
+  <div class="grid grid-cols-3 gap-4 text-center mb-4">
+    <div class="bg-green-100 p-4 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-green-700">Present Students</h3>
+      <p id="presentCount" class="text-2xl font-bold text-green-900">0</p>
+    </div>
+    <div class="bg-red-100 p-4 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-red-700">Absent Students</h3>
+      <p id="absentCount" class="text-2xl font-bold text-red-900">0</p>
+    </div>
+    <div class="bg-blue-100 p-4 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-blue-700">Total Students</h3>
+      <p id="totalCount" class="text-2xl font-bold text-blue-900">10</p>
+    </div>
+  </div>
+
+  <!-- Student List -->
+  <div class="grid grid-cols-2 gap-4 mb-4">
+    <script>
+      const students = ["Aarav", "Isha", "Rohan", "Priya", "Kiran", "Tina", "Vikas", "Neha", "Amit", "Sneha"];
+      document.write(students.map(student => `
+        <label class='flex items-center gap-2 bg-gray-50 p-3 rounded-lg shadow-sm border cursor-pointer'>
+          <input type='checkbox' class='studentCheckbox accent-purple-600' onchange='updateAttendance()'>
+          <span class='font-medium text-gray-700'>${student}</span>
+        </label>
+      `).join(''));
+    </script>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="text-center">
+    <button onclick="submitAttendance()" class="bg-green-500 text-white px-6 py-2 rounded-lg shadow hover:scale-105 transition">Submit Attendance</button>
+  </div>
+</div>
+
+<!-- QR Fullscreen Modal -->
+<div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50">
+  <div class="bg-white p-6 rounded-xl shadow-lg relative">
+    <button onclick="closeQR()" class="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full">X</button>
+    <h2 class="text-xl font-semibold text-center mb-4">Scan to Mark Attendance</h2>
+    <div id="qrcode"></div>
+  </div>
+</div>
+
+<script>
+  let totalStudents = 10;
+
+  function updateAttendance() {
+    const checkboxes = document.querySelectorAll(".studentCheckbox");
+    const present = [...checkboxes].filter(cb => cb.checked).length;
+    const absent = totalStudents - present;
+
+    document.getElementById("presentCount").innerText = present;
+    document.getElementById("absentCount").innerText = absent;
+  }
+
+  function submitAttendance() {
+    const checkboxes = document.querySelectorAll(".studentCheckbox");
+    const attendanceData = [...checkboxes].map(cb => cb.checked ? 100 : 0); // 100% for present, 0% for absent
+    localStorage.setItem("monthlyAttendance", JSON.stringify(attendanceData));
+    alert("Attendance submitted successfully!");
+    window.location.href = "monthlyreport.html"; // Redirect to monthly report page
+  }
+
+  function openQR() {
+    document.getElementById("qrModal").classList.remove("hidden");
+    const qrContainer = document.getElementById("qrcode");
+    qrContainer.innerHTML = "";
+    new QRCode(qrContainer, {
+      text: "Attendance for Web Technologies - 10:00 AM",
+      width: 250,
+      height: 250
+    });
+  }
+
+  function closeQR() {
+    document.getElementById("qrModal").classList.add("hidden");
+  }
+</script>
+
+</body>
+</html>
