@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="maincode.css">
+</head>
+<body onclick="closeDropdowns(event)">
+
+    <!-- Header -->
+    <header class="header">
+        <button onclick="toggleSidebar()" class="text-2xl font-bold">☰</button>
+        <div class="logo">
+            <span class="text-xl font-bold">Code_<span class="text-yellow-300">R</span>ed</span>
+        </div>
+        <div class="profile">
+            <span class="text-lg"></span>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA51Hk-IxsWTIv0ruG1KzaLkbulzIqG0Kk_Q&s" alt="Profile Picture">
+        </div>
+    </header>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="menu-item" onclick="switchContent('dashboard')">
+            <span class="menu-icon">🏠</span> <span class="menu-text">Dashboard</span>
+        </div>
+
+        <!-- Attendance Dropdown -->
+        <div class="menu-item" onclick="toggleDropdown(event, 'attendance-dropdown')">
+            <span class="menu-icon">📅</span> <span class="menu-text">Attendance</span>
+        </div>
+        <div class="dropdown-box" id="attendance-dropdown">
+            <div class="submenu-item" onclick="switchContent('myschedule.html') "> My Scheduled</div>
+        </div>
+
+        <!-- Report Dropdown -->
+        <div class="menu-item" onclick="toggleDropdown(event, 'report-dropdown')">
+            <span class="menu-icon">📊</span> <span class="menu-text">Report</span>
+        </div>
+        <div class="dropdown-box" id="report-dropdown">
+            <div class="submenu-item" onclick="switchContent('monthly-report')"> Monthly Report</div>
+        </div>
+    </div>
+
+    <!-- Dynamic Content -->
+    <div class="content" id="content">
+        <h2 class="text-2xl font-bold">🏠 Dashboard</h2>
+        <p>Welcome to the dashboard!</p>
+
+        <!-- Announcements Section -->
+        <div class="section">
+            <h2>📢 Announcements</h2>
+            <textarea class="textarea" placeholder="Write your announcement here..."></textarea>
+            <button class="button mt-2">Upload</button>
+        </div>
+
+        <!-- Assignments Section -->
+        <div class="section">
+            <h2>📚 Assignments</h2>
+            <textarea class="textarea" placeholder="Write your assignment here..."></textarea>
+            <button class="button mt-2">Post</button>
+        </div>
+    </div>
+    <script src="maincode.js">
+ </script>
+</body>
+</html>
